@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Strength Analyzer</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        input { padding: 8px; width: 300px; }
+        button { padding: 8px 12px; margin-top: 10px; }
+        .result { margin-top: 20px; }
+        .feedback { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Password Strength Analyzer </h1>
+    <form method="POST">
+        <input type="password" name="password" placeholder="Enter password" required>
+        <button type="submit">Check Strength</button>
+    </form>
+
+    <div class="result">
+        {% if reused %}
+            <p class="feedback"> This password has been used before. Choose a new one.</p>
+        {% elif result %}
+            <p>Score: {{ result.score }} / 6</p>
+            {% if result.feedback %}
+                <p class="feedback">Suggestions:</p>
+                <ul>
+                    {% for f in result.feedback %}
+                        <li>{{ f }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <p class="success"> Suggested stronger password: {{ suggestion }}</p>
+            <p class="success"> Password saved securely (hashed).</p>
+        {% endif %}
+    </div>
+</body>
+</html>
